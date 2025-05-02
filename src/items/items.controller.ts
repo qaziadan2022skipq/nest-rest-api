@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { ItemInterface } from './interfaces/item.interface';
 import { Item } from './schema/item.schema';
@@ -32,14 +40,11 @@ export class ItemsController {
     return this.itemsService.delete(id);
   }
 
-  // @Put(':id')
-  // updateItems(@Body() updatedItemsDto: CreateItemDto, @Param('id') id): string {
-  //   return `
-  //   Item No ${id}
-  //   Items Details:
-  //   ${updatedItemsDto.name}
-  //   ${updatedItemsDto.description}
-  //   ${updatedItemsDto.qty}
-  //   `;
-  // }
+  @Put(':id')
+  updateItems(
+    @Body() updatedItemsDto: CreateItemDto,
+    @Param('id') id,
+  ): Promise<ItemInterface> {
+    return this.itemsService.update(id, updatedItemsDto);
+  }
 }

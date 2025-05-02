@@ -27,11 +27,15 @@ export class ItemsService {
   }
 
   async delete(id: string): Promise<string> {
-    await this.itemModel.deleteOne({ _id: id });
+    await this.itemModel.findByIdAndDelete(id);
     return 'Deleted';
   }
 
-  // async update(id: string): Promise<Item> {
-  //   return await this.itemModel.findOneAndUpdate({_id: id, name: })
-  // }
+  async update(id: string, item: ItemInterface): Promise<ItemInterface> {
+    const updatedItem = await this.itemModel.findByIdAndUpdate(id, item, {
+      new: true,
+    });
+    if (updatedItem === null) return { name: '', description: '', qty: 0 };
+    return updatedItem;
+  }
 }
